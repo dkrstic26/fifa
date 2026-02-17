@@ -7,7 +7,6 @@ tournament = {
             "losses" : 0,
             "goals_for" : 0,
             "goals_against" : 0,
-            "goal_difference" : 0,
             "points" : 0
         },
         "dusan" : {
@@ -17,7 +16,6 @@ tournament = {
             "losses" : 0,
             "goals_for" : 0,
             "goals_against" : 0,
-            "goal_difference" : 0,
             "points" : 0
         },
         "dimi": {
@@ -27,7 +25,6 @@ tournament = {
             "losses" : 0,
             "goals_for" : 0,
             "goals_against" : 0,
-            "goal_difference" : 0,
             "points" : 0
         }
     }
@@ -46,8 +43,29 @@ for x in range(num_of_games):
     print(f"{home_player} vs {away_player}")
     home_goals = int(input("Enter home player's goals"))
     away_goals = int(input("Enter away player's goals"))
+    home_player["goals_for"] += home_goals
+    home_player["goals_against"] += away_goals
+    away_player["goals_for"] += away_goals
+    away_player["goals_against"] += home_goals
 
     if home_goals > away_goals:
         home_player["points"] += 3
+        home_player["wins"] += 1
+        away_player["losses"] += 1
+
+    elif away_goals > home_goals:
+        away_player["points"] += 3
+        away_player["wins"] += 1
+        home_player["losses"] += 1
+
+    else:
+        home_player["points"] += 1
+        away_player["points"] += 1
+        home_player["draws"] += 1
+        away_player["draws"] += 1
+
+
+
+
 
     
