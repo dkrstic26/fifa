@@ -1,0 +1,32 @@
+{
+    "dusan": {
+        "name": "Dusan",
+        "games_played": 4,
+        "wins": 4,
+        "draws": 0,
+        "losses": 0,
+        "goals_for": 32,
+        "goals_against": 4,
+        "points": 12
+    },
+    "marko": {
+        "name": "Marko",
+        "games_played": 4,
+        "wins": 0,
+        "draws": 2,
+        "losses": 2,
+        "goals_for": 8,
+        "goals_against": 22,
+        "points": 2
+    },
+    "dimi": {
+        "name": "Dimi",
+        "games_played": 4,
+        "wins": 0,
+        "draws": 2,
+        "losses": 2,
+        "goals_for": 8,
+        "goals_against": 22,
+        "points": 2
+    }
+}

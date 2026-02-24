@@ -1,4 +1,14 @@
-tournament = {
+import json
+import os
+
+file_path = "tournaments/all_time.json"
+
+if os.path.isfile(file_path):
+    with open(file_path, "r") as file:
+        tournament = json.load(file)
+    
+else:
+    tournament = {
     "player" : {
         "marko" : {
             "name" : "Marko",
@@ -32,6 +42,7 @@ tournament = {
         }
     }
 }
+
 
 num_of_games = int(input("Please enter the total amount of games: "))
 
@@ -78,4 +89,8 @@ for player_id, stats in standings.items():
     goal_difference = int(stats["goals_for"]) - int(stats["goals_against"])
 
     print(f"Name: {stats["name"]} | Wins: {stats["wins"]} | Losses: {stats["losses"]} | Draws: {stats["draws"]} | Points: {stats["points"]} | Goals For: {stats["goals_for"]} | Goals Against: {stats["goals_against"]} | Goal Difference : {goal_difference}")
+
+with open(file_path, "w") as json_file:
+    json.dump(tournament, json_file, indent=4)
+
 
