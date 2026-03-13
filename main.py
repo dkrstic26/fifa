@@ -1,53 +1,51 @@
 import json
 import os
 
-file_path = "tournaments/all_time.json"
-
-if os.path.isfile(file_path):
-    with open(file_path, "r") as file:
+def open_file(path):
+    with open(path, "r") as file:
         tournament = json.load(file)
-    
-else:
+
+    return tournament
+
+def new_tournament():
     tournament = {
-    "player" : {
-        "marko" : {
-            "name" : "Marko",
-            "games_played" : 0,
-            "wins" : 0,
-            "draws" : 0,
-            "losses" : 0,
-            "goals_for" : 0,
-            "goals_against" : 0,
-            "points" : 0
-        },
-        "dusan" : {
-            "name" : "Dusan",
-            "games_played" : 0,
-            "wins" : 0,
-            "draws" : 0,
-            "losses" : 0,
-            "goals_for" : 0,
-            "goals_against" : 0,
-            "points" : 0
-        },
-        "dimi": {
-            "name" : "Dimi",
-            "games_played" : 0,
-            "wins" : 0,
-            "draws" : 0,
-            "losses" : 0,
-            "goals_for" : 0,
-            "goals_against" : 0,
-            "points" : 0
+        "player" : {
+            "marko" : {
+                "name" : "Marko",
+                "games_played" : 0,
+                "wins" : 0,
+                "draws" : 0,
+                "losses" : 0,
+                "goals_for" : 0,
+                "goals_against" : 0,
+                "points" : 0
+            },
+            "dusan" : {
+                "name" : "Dusan",
+                "games_played" : 0,
+                "wins" : 0,
+                "draws" : 0,
+                "losses" : 0,
+                "goals_for" : 0,
+                "goals_against" : 0,
+                "points" : 0
+            },
+            "dimi": {
+                "name" : "Dimi",
+                "games_played" : 0,
+                "wins" : 0,
+                "draws" : 0,
+                "losses" : 0,
+                "goals_for" : 0,
+                "goals_against" : 0,
+                "points" : 0
+            }
         }
     }
-}
 
+    return tournament
 
-num_of_games = int(input("Please enter the total amount of games: "))
-
-for x in range(num_of_games):
-    print(f"Matchday {x + 1}")
+def score_input(tournament):
     home_name = input("Please enter the home player's name: ").strip().lower()
     away_name = input("Please enter the away player's name: ").strip().lower()
     home_player = tournament["player"][home_name]
@@ -79,16 +77,39 @@ for x in range(num_of_games):
         home_player["draws"] += 1
         away_player["draws"] += 1
 
-
-standings = dict(sorted(
+def calculate_standings(tournament):
+    standings = dict(sorted(
     tournament["player"].items(),
     key=lambda item: (-item[1]["points"], -(item[1]["goals_for"] - item[1]["goals_against"]), -item[1]["goals_for"])
 ))
+    
+    return standings
 
-for player_id, stats in standings.items():
-    goal_difference = int(stats["goals_for"]) - int(stats["goals_against"])
+def print_standings(standings):
+    for _, stats in standings.items():
+        goal_difference = int(stats["goals_for"]) - int(stats["goals_against"])
+        print(f"Name: {stats["name"]} | Wins: {stats["wins"]} | Losses: {stats["losses"]} | Draws: {stats["draws"]} | Points: {stats["points"]} | Goals For: {stats["goals_for"]} | Goals Against: {stats["goals_against"]} | Goal Difference : {goal_difference}")
 
-    print(f"Name: {stats["name"]} | Wins: {stats["wins"]} | Losses: {stats["losses"]} | Draws: {stats["draws"]} | Points: {stats["points"]} | Goals For: {stats["goals_for"]} | Goals Against: {stats["goals_against"]} | Goal Difference : {goal_difference}")
+    
+
+    
+file_path = "tournaments/all_time.json"
+
+if os.path.isfile(file_path) and os.path.getsize(file_path) > 0:
+    tournament = open_file(file_path)
+else:
+    tournament = new_tournament()
+        
+
+
+num_of_games = int(input("Please enter the total amount of games: "))
+
+for x in range(num_of_games):
+    print(f"Matchday {x + 1}")
+    score_input(tournament)
+
+standings = calculate_standings(tournament)
+print_standings(standings)
 
 with open(file_path, "w") as json_file:
     json.dump(tournament, json_file, indent=4)
