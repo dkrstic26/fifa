@@ -90,10 +90,12 @@ def print_standings(standings):
         goal_difference = int(stats["goals_for"]) - int(stats["goals_against"])
         print(f"Name: {stats["name"]} | Wins: {stats["wins"]} | Losses: {stats["losses"]} | Draws: {stats["draws"]} | Points: {stats["points"]} | Goals For: {stats["goals_for"]} | Goals Against: {stats["goals_against"]} | Goal Difference : {goal_difference}")
 
+if os.path.isdir("tournaments"):
+    file_path = "tournaments/all_time.json"
+else:
+    os.mkdir("tournaments")
+    file_path = "tournaments/all_time.json"
     
-
-    
-file_path = "tournaments/all_time.json"
 
 if os.path.isfile(file_path) and os.path.getsize(file_path) > 0:
     tournament = open_file(file_path)
