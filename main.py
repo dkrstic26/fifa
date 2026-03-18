@@ -46,14 +46,28 @@ def new_tournament():
     return tournament
 
 def score_input(tournament):
-    home_name = input("Please enter the home player's name: ").strip().lower()
-    away_name = input("Please enter the away player's name: ").strip().lower()
+    while True:
+        home_name = input("Please enter the home player's name: ").strip().lower()
+        if home_name in tournament["player"]:
+            break
+        print("Invalid input, please enter valid player (dusan, marko or dimi).")
+
+    while True:
+        away_name = input("Please enter the away player's name: ").strip().lower()
+        if away_name not in tournament["player"]:
+            print("Invalid input, please enter valid player (dusan, marko or dimi).")
+        elif away_name == home_name:
+            print("Cannot have a player play themselves, please enter a different player.")
+        else:
+            break
+        
+        
     home_player = tournament["player"][home_name]
     away_player = tournament["player"][away_name]
     home_player["games_played"] += 1
     away_player["games_played"] += 1
 
-    print(f"{home_player["name"]} vs {away_player["name"]}")
+    print(f"{home_player['name']} vs {away_player['name']}")
     home_goals = int(input("Enter home player's goals: "))
     away_goals = int(input("Enter away player's goals: "))
     home_player["goals_for"] += home_goals
