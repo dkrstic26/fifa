@@ -50,12 +50,12 @@ def score_input(tournament):
         home_name = input("Please enter the home player's name: ").strip().lower()
         if home_name in tournament["player"]:
             break
-        print("Invalid input, please enter valid player (dusan, marko or dimi).")
+        print("Invalid input, please enter valid player.")
 
     while True:
         away_name = input("Please enter the away player's name: ").strip().lower()
         if away_name not in tournament["player"]:
-            print("Invalid input, please enter valid player (dusan, marko or dimi).")
+            print("Invalid input, please enter valid player.")
         elif away_name == home_name:
             print("Cannot have a player play themselves, please enter a different player.")
         else:
@@ -68,8 +68,26 @@ def score_input(tournament):
     away_player["games_played"] += 1
 
     print(f"{home_player['name']} vs {away_player['name']}")
-    home_goals = int(input("Enter home player's goals: "))
-    away_goals = int(input("Enter away player's goals: "))
+    while True:
+        try:
+            home_goals = int(input("Enter home player's goals: "))
+            if home_goals < 0:
+                print("Goals scored cannot be a negative number!")
+                continue
+            break
+        except ValueError:
+            print("Invalid input, please enter a valid goal amount for the home team.")
+    
+    while True:
+        try:
+            away_goals = int(input("Enter away player's goals: "))
+            if away_goals < 0:
+                print("Away goals cannot be a negative number!")
+                continue
+            break
+        except ValueError:
+            print("Invalid input, please enter a valid goal amount for the away team.")
+
     home_player["goals_for"] += home_goals
     home_player["goals_against"] += away_goals
     away_player["goals_for"] += away_goals
@@ -102,7 +120,7 @@ def calculate_standings(tournament):
 def print_standings(standings):
     for _, stats in standings.items():
         goal_difference = int(stats["goals_for"]) - int(stats["goals_against"])
-        print(f"Name: {stats["name"]} | Wins: {stats["wins"]} | Losses: {stats["losses"]} | Draws: {stats["draws"]} | Points: {stats["points"]} | Goals For: {stats["goals_for"]} | Goals Against: {stats["goals_against"]} | Goal Difference : {goal_difference}")
+        print(f"Name: {stats['name']} | Wins: {stats['wins']} | Losses: {stats['losses']} | Draws: {stats['draws']} | Points: {stats['points']} | Goals For: {stats['goals_for']} | Goals Against: {stats['goals_against']} | Goal Difference : {goal_difference}")
 
 if os.path.isdir("tournaments"):
     file_path = "tournaments/all_time.json"
@@ -116,9 +134,15 @@ if os.path.isfile(file_path) and os.path.getsize(file_path) > 0:
 else:
     tournament = new_tournament()
         
-
-
-num_of_games = int(input("Please enter the total amount of games: "))
+while True:
+    try:
+        num_of_games = int(input("Please enter the total amount of games: "))
+        if num_of_games < 0:
+            print("Number of games cannot be a negative number!")
+            continue
+        break
+    except ValueError:
+        print("Invalid number of games, please enter a numerical value for the games played.")
 
 for x in range(num_of_games):
     print(f"Matchday {x + 1}")
