@@ -2,33 +2,30 @@
     "player": {
         "marko": {
             "name": "Marko",
-            "games_played": 12,
+            "games_played": 4,
             "wins": 0,
-            "draws": 6,
-            "losses": 6,
-            "goals_for": 20,
-            "goals_against": 44,
-            "points": 6
+            "draws": 2,
+            "losses": 2,
+            "goals_for": 6,
+            "goals_against": 15
         },
         "dusan": {
             "name": "Dusan",
-            "games_played": 12,
-            "wins": 12,
+            "games_played": 4,
+            "wins": 4,
             "draws": 0,
             "losses": 0,
-            "goals_for": 60,
-            "goals_against": 14,
-            "points": 36
+            "goals_for": 21,
+            "goals_against": 4
         },
         "dimi": {
             "name": "Dimi",
-            "games_played": 12,
+            "games_played": 4,
             "wins": 0,
-            "draws": 6,
-            "losses": 6,
-            "goals_for": 20,
-            "goals_against": 42,
-            "points": 6
+            "draws": 2,
+            "losses": 2,
+            "goals_for": 6,
+            "goals_against": 14
         }
     }
 }
