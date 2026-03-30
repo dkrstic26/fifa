@@ -147,17 +147,21 @@ def date_input():
         except ValueError:
                 print("Invalid input, please enter the date of the tournament in the correct format.")
 
+current_date = date_input()
+current_tournament = new_tournament()
+current_file_path = f"tournaments/{current_date}.json"
+
 if os.path.isdir("tournaments"):
-    file_path = "tournaments/all_time.json"
+    cummulative_file_path = "tournaments/all_time.json"
 else:
     os.mkdir("tournaments")
-    file_path = "tournaments/all_time.json"
+    cummulative_file_path = "tournaments/all_time.json"
     
 
-if os.path.isfile(file_path) and os.path.getsize(file_path) > 0:
-    tournament = open_file(file_path)
+if os.path.isfile(cummulative_file_path) and os.path.getsize(cummulative_file_path) > 0:
+    all_time_tournament = open_file(cummulative_file_path)
 else:
-    tournament = new_tournament()
+    all_time_tournament = new_tournament()
         
 while True:
     try:
@@ -172,15 +176,19 @@ while True:
 
 for x in range(num_of_games):
     print(f"Matchday {x + 1}")
-    home_name, away_name = player_input(tournament)
+    home_name, away_name = player_input(current_tournament)
     home_goals, away_goals = score_input(home_name, away_name)
-    apply_match_result(tournament, home_name, away_name, home_goals, away_goals)
+    apply_match_result(all_time_tournament, home_name, away_name, home_goals, away_goals)
+    apply_match_result(current_tournament, home_name, away_name, home_goals, away_goals)
 
 
-standings = calculate_standings(tournament)
+standings = calculate_standings(all_time_tournament)
 print_standings(standings)
 
-with open(file_path, "w") as json_file:
-    json.dump(tournament, json_file, indent=4)
+with open(cummulative_file_path, "w") as json_file:
+    json.dump(all_time_tournament, json_file, indent=4)
+
+with open(current_file_path, "w") as json_file:
+    json.dump(current_tournament, json_file, indent=4)
 
 
