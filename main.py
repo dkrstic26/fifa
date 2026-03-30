@@ -1,5 +1,7 @@
 import json
 import os
+from datetime import datetime
+from pathlib import Path
 
 def open_file(path):
     with open(path, "r") as file:
@@ -126,6 +128,24 @@ def print_standings(standings):
         goal_difference = int(stats["goals_for"]) - int(stats["goals_against"])
         points = (stats["wins"] * 3) + stats["draws"]
         print(f"Name: {stats['name']} | Wins: {stats['wins']} | Losses: {stats['losses']} | Draws: {stats['draws']} | Points: {points} | Goals For: {stats['goals_for']} | Goals Against: {stats['goals_against']} | Goal Difference : {goal_difference}")
+
+def date_input():
+    folder = Path("tournaments")
+    folder.mkdir(exist_ok=True)
+
+    while True:
+        date_text = input("Please enter the tournament date(MM-DD-YYYY): ")
+        try:
+            datetime.strptime(date_text, '%m-%d-%Y')
+            file_path = folder/f"{date_text}.json"
+
+            if file_path.exists():
+                print("This tournament date already exists, please enter a new one!")
+            else:
+                return date_text
+                
+        except ValueError:
+                print("Invalid input, please enter the date of the tournament in the correct format.")
 
 if os.path.isdir("tournaments"):
     file_path = "tournaments/all_time.json"
