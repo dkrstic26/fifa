@@ -20,7 +20,6 @@ def new_tournament():
                 "losses" : 0,
                 "goals_for" : 0,
                 "goals_against" : 0,
-                "points" : 0
             },
             "dusan" : {
                 "name" : "Dusan",
@@ -30,7 +29,6 @@ def new_tournament():
                 "losses" : 0,
                 "goals_for" : 0,
                 "goals_against" : 0,
-                "points" : 0
             },
             "dimi": {
                 "name" : "Dimi",
@@ -40,7 +38,6 @@ def new_tournament():
                 "losses" : 0,
                 "goals_for" : 0,
                 "goals_against" : 0,
-                "points" : 0
             }
         }
     }
@@ -114,11 +111,15 @@ def apply_match_result(tournament, home_name, away_name, home_goals, away_goals)
         home_player["draws"] += 1
         away_player["draws"] += 1
 
+def get_points(player):
+    points = (player["wins"] * 3) + player["draws"]
+    return points
+
 
 def calculate_standings(tournament):
     standings = sorted(
     tournament["player"].items(),
-    key=lambda item: (-((item[1]["wins"] * 3) + item[1]["draws"]), -(item[1]["goals_for"] - item[1]["goals_against"]), -item[1]["goals_for"])
+    key=lambda item: (-(get_points(item[1])), -(item[1]["goals_for"] - item[1]["goals_against"]), -item[1]["goals_for"])
 )
     
     return standings
@@ -126,7 +127,7 @@ def calculate_standings(tournament):
 def print_standings(standings):
     for _, stats in standings:
         goal_difference = int(stats["goals_for"]) - int(stats["goals_against"])
-        points = (stats["wins"] * 3) + stats["draws"]
+        points = get_points(stats)
         print(f"Name: {stats['name']} | Wins: {stats['wins']} | Losses: {stats['losses']} | Draws: {stats['draws']} | Points: {points} | Goals For: {stats['goals_for']} | Goals Against: {stats['goals_against']} | Goal Difference : {goal_difference}")
 
 def date_input():
