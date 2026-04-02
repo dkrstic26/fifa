@@ -39,7 +39,8 @@ def new_tournament():
                 "goals_for" : 0,
                 "goals_against" : 0,
             }
-        }
+        },
+        "matches" : []
     }
 
     return tournament
@@ -87,6 +88,16 @@ def score_input(home_name, away_name):
 
     return home_goals, away_goals
 
+def add_match(tournament, home_player, away_player, home_goals, away_goals):
+    new_match = {
+        "home_player": home_player,
+        "away_player": away_player,
+        "home_goals": home_goals,
+        "away_goals": away_goals
+    }
+
+    tournament["matches"].append(new_match)
+
 def apply_match_result(tournament, home_name, away_name, home_goals, away_goals):
     
     home_player = tournament["player"][home_name]
@@ -112,8 +123,7 @@ def apply_match_result(tournament, home_name, away_name, home_goals, away_goals)
         away_player["draws"] += 1
 
 def get_points(player):
-    points = (player["wins"] * 3) + player["draws"]
-    return points
+    return (player["wins"] * 3) + player["draws"]
 
 
 def calculate_standings(tournament):
@@ -124,11 +134,22 @@ def calculate_standings(tournament):
     
     return standings
 
+def print_matches(tournament):
+    for i, match in enumerate(tournament["matches"], start=1):
+        home = match["home_player"]
+        away = match["away_player"]
+        h_goals = match["home_goals"]
+        a_goals = match["away_goals"]
+
+        print(f"Matchday {i}: {home} {h_goals} - {a_goals} {away}")
+
+    print("-" * 30)
+
 def print_standings(standings):
     for _, stats in standings:
         goal_difference = int(stats["goals_for"]) - int(stats["goals_against"])
         points = get_points(stats)
-        print(f"Name: {stats['name']} | Wins: {stats['wins']} | Losses: {stats['losses']} | Draws: {stats['draws']} | Points: {points} | Goals For: {stats['goals_for']} | Goals Against: {stats['goals_against']} | Goal Difference : {goal_difference}")
+        print(f"{stats['name']} | Games Played: {stats['games_played']} | Wins: {stats['wins']} | Draws: {stats['draws']} | Losses: {stats['losses']} | Goals For: {stats['goals_for']} | Goals Against: {stats['goals_against']} | Goal Difference : {goal_difference} | Points: {points}")
 
 def date_input():
     folder = Path("tournaments")
@@ -179,12 +200,22 @@ for x in range(num_of_games):
     print(f"Matchday {x + 1}")
     home_name, away_name = player_input(current_tournament)
     home_goals, away_goals = score_input(home_name, away_name)
+    add_match(current_tournament, home_name, away_name, home_goals, away_goals)
     apply_match_result(all_time_tournament, home_name, away_name, home_goals, away_goals)
     apply_match_result(current_tournament, home_name, away_name, home_goals, away_goals)
 
+print("\n Tournament Standings")
+current_standings = calculate_standings(current_tournament)
+print_standings(current_standings)
 
-standings = calculate_standings(all_time_tournament)
-print_standings(standings)
+print("\n Matches: ")
+print_matches(current_tournament)
+
+print("\n All Time Standings")
+all_time_standings = calculate_standings(all_time_tournament)
+print_standings(all_time_standings)
+
+
 
 with open(cummulative_file_path, "w") as json_file:
     json.dump(all_time_tournament, json_file, indent=4)

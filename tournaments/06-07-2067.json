@@ -1,0 +1,69 @@
+{
+    "player": {
+        "marko": {
+            "name": "Marko",
+            "games_played": 4,
+            "wins": 0,
+            "draws": 2,
+            "losses": 2,
+            "goals_for": 8,
+            "goals_against": 18
+        },
+        "dusan": {
+            "name": "Dusan",
+            "games_played": 4,
+            "wins": 4,
+            "draws": 0,
+            "losses": 0,
+            "goals_for": 24,
+            "goals_against": 4
+        },
+        "dimi": {
+            "name": "Dimi",
+            "games_played": 4,
+            "wins": 0,
+            "draws": 2,
+            "losses": 2,
+            "goals_for": 8,
+            "goals_against": 18
+        }
+    },
+    "matches": [
+        {
+            "home_player": "dusan",
+            "away_player": "dimi",
+            "home_goals": 6,
+            "away_goals": 1
+        },
+        {
+            "home_player": "dusan",
+            "away_player": "marko",
+            "home_goals": 5,
+            "away_goals": 1
+        },
+        {
+            "home_player": "dimi",
+            "away_player": "marko",
+            "home_goals": 4,
+            "away_goals": 4
+        },
+        {
+            "home_player": "dimi",
+            "away_player": "dusan",
+            "home_goals": 1,
+            "away_goals": 6
+        },
+        {
+            "home_player": "marko",
+            "away_player": "dusan",
+            "home_goals": 1,
+            "away_goals": 7
+        },
+        {
+            "home_player": "marko",
+            "away_player": "dimi",
+            "home_goals": 2,
+            "away_goals": 2
+        }
+    ]
+}
