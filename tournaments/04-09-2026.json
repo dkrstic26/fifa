@@ -1,0 +1,110 @@
+{
+    "player": {
+        "dusan": {
+            "games_played": 6,
+            "wins": 6,
+            "draws": 0,
+            "losses": 0,
+            "goals_for": 33,
+            "goals_against": 5
+        },
+        "lazar": {
+            "games_played": 6,
+            "wins": 0,
+            "draws": 4,
+            "losses": 2,
+            "goals_for": 8,
+            "goals_against": 21
+        },
+        "marko": {
+            "games_played": 6,
+            "wins": 0,
+            "draws": 4,
+            "losses": 2,
+            "goals_for": 9,
+            "goals_against": 17
+        },
+        "dimi": {
+            "games_played": 6,
+            "wins": 0,
+            "draws": 4,
+            "losses": 2,
+            "goals_for": 10,
+            "goals_against": 17
+        }
+    },
+    "matches": [
+        {
+            "home_player": "dusan",
+            "away_player": "lazar",
+            "home_goals": 10,
+            "away_goals": 0
+        },
+        {
+            "home_player": "dusan",
+            "away_player": "marko",
+            "home_goals": 5,
+            "away_goals": 1
+        },
+        {
+            "home_player": "dusan",
+            "away_player": "dimi",
+            "home_goals": 5,
+            "away_goals": 1
+        },
+        {
+            "home_player": "dimi",
+            "away_player": "lazar",
+            "home_goals": 2,
+            "away_goals": 2
+        },
+        {
+            "home_player": "dimi",
+            "away_player": "marko",
+            "home_goals": 2,
+            "away_goals": 2
+        },
+        {
+            "home_player": "dimi",
+            "away_player": "dusan",
+            "home_goals": 1,
+            "away_goals": 4
+        },
+        {
+            "home_player": "marko",
+            "away_player": "dimi",
+            "home_goals": 2,
+            "away_goals": 2
+        },
+        {
+            "home_player": "marko",
+            "away_player": "lazar",
+            "home_goals": 2,
+            "away_goals": 2
+        },
+        {
+            "home_player": "marko",
+            "away_player": "dusan",
+            "home_goals": 1,
+            "away_goals": 5
+        },
+        {
+            "home_player": "lazar",
+            "away_player": "dusan",
+            "home_goals": 1,
+            "away_goals": 4
+        },
+        {
+            "home_player": "lazar",
+            "away_player": "marko",
+            "home_goals": 1,
+            "away_goals": 1
+        },
+        {
+            "home_player": "lazar",
+            "away_player": "dimi",
+            "home_goals": 2,
+            "away_goals": 2
+        }
+    ]
+}

@@ -1,0 +1,34 @@
+{
+    "player": {
+        "dusan": {
+            "games_played": 2,
+            "wins": 2,
+            "draws": 0,
+            "losses": 0,
+            "goals_for": 8,
+            "goals_against": 2
+        },
+        "dimi": {
+            "games_played": 2,
+            "wins": 0,
+            "draws": 0,
+            "losses": 2,
+            "goals_for": 2,
+            "goals_against": 8
+        }
+    },
+    "matches": [
+        {
+            "home_player": "dusan",
+            "away_player": "dimi",
+            "home_goals": 4,
+            "away_goals": 1
+        },
+        {
+            "home_player": "dimi",
+            "away_player": "dusan",
+            "home_goals": 1,
+            "away_goals": 4
+        }
+    ]
+}

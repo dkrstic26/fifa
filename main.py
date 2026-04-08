@@ -9,41 +9,46 @@ def open_file(path):
 
     return tournament
 
-def new_tournament():
+def create_players():
+    while True:
+        try:
+            n_of_players = int(input("How many players are playing this tournament?\n"))
+            if n_of_players < 0:
+                print("Number of players cannot be negative, please enter a valid number.")
+                continue
+            elif n_of_players == 0:
+                print("Number of players cannot be zero, please enter a valid number")
+                continue
+            break
+        except ValueError:
+            print("Invalid input, please enter a valid amount of players.")
+
+    player_names = []
+
+    for i in range(n_of_players):
+        while True:
+            player_name = input(f"Please enter the name for player {i + 1}: ").strip().lower()
+            if not player_name:
+                print("The name cannot be empty, please enter a valid player name.")
+                continue
+            break
+        player_names.append(player_name)
+
+    return player_names
+
+
+def new_tournament(player_names):
+    names = player_names
+
+    default_stats = {"games_played" : 0, "wins" : 0, "draws" : 0, "losses" : 0, "goals_for" : 0, "goals_against" : 0}
+
     tournament = {
-        "player" : {
-            "marko" : {
-                "name" : "Marko",
-                "games_played" : 0,
-                "wins" : 0,
-                "draws" : 0,
-                "losses" : 0,
-                "goals_for" : 0,
-                "goals_against" : 0,
-            },
-            "dusan" : {
-                "name" : "Dusan",
-                "games_played" : 0,
-                "wins" : 0,
-                "draws" : 0,
-                "losses" : 0,
-                "goals_for" : 0,
-                "goals_against" : 0,
-            },
-            "dimi": {
-                "name" : "Dimi",
-                "games_played" : 0,
-                "wins" : 0,
-                "draws" : 0,
-                "losses" : 0,
-                "goals_for" : 0,
-                "goals_against" : 0,
-            }
-        },
+        "player" : {name: default_stats.copy() for name in names},
         "matches" : []
     }
 
     return tournament
+    
 
 def player_input(tournament):
     while True:
@@ -99,7 +104,12 @@ def add_match(tournament, home_player, away_player, home_goals, away_goals):
     tournament["matches"].append(new_match)
 
 def apply_match_result(tournament, home_name, away_name, home_goals, away_goals):
+    if home_name not in tournament["player"]:
+        tournament["player"][home_name] = {"games_played" : 0, "wins" : 0, "draws" : 0, "losses" : 0, "goals_for" : 0, "goals_against" : 0}
     
+    if away_name not in tournament["player"]:
+        tournament["player"][away_name] = {"games_played" : 0, "wins" : 0, "draws" : 0, "losses" : 0, "goals_for" : 0, "goals_against" : 0}
+
     home_player = tournament["player"][home_name]
     away_player = tournament["player"][away_name]
 
@@ -146,10 +156,10 @@ def print_matches(tournament):
     print("-" * 30)
 
 def print_standings(standings):
-    for _, stats in standings:
+    for player_name, stats in standings:
         goal_difference = int(stats["goals_for"]) - int(stats["goals_against"])
         points = get_points(stats)
-        print(f"{stats['name']} | Games Played: {stats['games_played']} | Wins: {stats['wins']} | Draws: {stats['draws']} | Losses: {stats['losses']} | Goals For: {stats['goals_for']} | Goals Against: {stats['goals_against']} | Goal Difference : {goal_difference} | Points: {points}")
+        print(f"{player_name.title()} | Games Played: {stats['games_played']} | Wins: {stats['wins']} | Draws: {stats['draws']} | Losses: {stats['losses']} | Goals For: {stats['goals_for']} | Goals Against: {stats['goals_against']} | Goal Difference : {goal_difference} | Points: {points}")
 
 def date_input():
     folder = Path("tournaments")
@@ -169,8 +179,24 @@ def date_input():
         except ValueError:
                 print("Invalid input, please enter the date of the tournament in the correct format.")
 
+def number_of_games(player_names):
+    players = len(player_names)
+    while True:
+        try:
+            head_to_head = int(input("How many head to head matchups betewen each of the players are there?"))
+            if head_to_head <= 0:
+                print("Invalid number of games, please enter 1 or more for head to head games.")
+                continue
+            break
+        except ValueError:
+            print("Invalid input, please enter a valid amount of games.")
+
+    return (players * (players - 1) // 2) * head_to_head
+
+
 current_date = date_input()
-current_tournament = new_tournament()
+player_names = create_players()
+current_tournament = new_tournament(player_names)
 current_file_path = f"tournaments/{current_date}.json"
 
 if os.path.isdir("tournaments"):
@@ -185,15 +211,7 @@ if os.path.isfile(cummulative_file_path) and os.path.getsize(cummulative_file_pa
 else:
     all_time_tournament = new_tournament()
         
-while True:
-    try:
-        num_of_games = int(input("Please enter the total amount of games: "))
-        if num_of_games < 0:
-            print("Number of games cannot be a negative number!")
-            continue
-        break
-    except ValueError:
-        print("Invalid number of games, please enter a numerical value for the games played.")
+num_of_games = number_of_games(player_names)
 
 
 for x in range(num_of_games):
